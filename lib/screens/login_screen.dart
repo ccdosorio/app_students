@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:app_students/ui/input_decorations.dart';
 import 'package:app_students/widgets/widgets.dart';
-import 'package:app_students/ui/input_decorations.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -41,43 +40,59 @@ class _LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Form(
-          child: Column(
-        children: [
-          TextFormField(
-            autocorrect: false,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecorations.authInputDecoration(
-              hintText: 'usuario@gmail.com',
-              labelText: 'Correo electrónico',
-              prefixIcon: Icons.alternate_email_rounded,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Column(
+          children: [
+            TextFormField(
+              autocorrect: false,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecorations.authInputDecoration(
+                hintText: 'usuario@gmail.com',
+                labelText: 'Correo electrónico',
+                prefixIcon: Icons.alternate_email_rounded,
+              ),
+              validator: (value) {
+                String pattern =
+                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+                RegExp regExp = new RegExp(pattern);
+
+                return regExp.hasMatch(value ?? '')
+                    ? null
+                    : 'El valor ingresado no luce como un correo';
+              },
             ),
-          ),
-          SizedBox(height: 30),
-          TextFormField(
-            autocorrect: false,
-            obscureText: true,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecorations.authInputDecoration(
-              hintText: '******',
-              labelText: 'Contraseña',
-              prefixIcon: Icons.lock_outline,
+            SizedBox(height: 30),
+            TextFormField(
+              autocorrect: false,
+              obscureText: true,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecorations.authInputDecoration(
+                hintText: '******',
+                labelText: 'Contraseña',
+                prefixIcon: Icons.lock_outline,
+              ),
+              validator: (value) {
+                if (value != null && value.length >= 6) return null;
+                return 'La contraseña debe ser de 6 caracteres';
+              },
             ),
-          ),
-          SizedBox(height: 30),
-          MaterialButton(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            disabledColor: Colors.grey,
-            elevation: 0,
-            color: Color.fromRGBO(40, 116, 166, 1),
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-              child: Text('Ingresar', style: TextStyle(color: Colors.white)),
-            ),
-            onPressed: () {},
-          )
-        ],
-      )),
+            SizedBox(height: 30),
+            MaterialButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              disabledColor: Colors.grey,
+              elevation: 0,
+              color: Color.fromRGBO(40, 116, 166, 1),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                child: Text('Ingresar', style: TextStyle(color: Colors.white)),
+              ),
+              onPressed: () {},
+            )
+          ],
+        ),
+      ),
     );
   }
 }
