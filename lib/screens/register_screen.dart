@@ -1,13 +1,13 @@
-import 'package:app_students/providers/login_form_provider.dart';
-import 'package:app_students/services/services.dart';
 import 'package:app_students/ui/alert_dialogs.dart';
 import 'package:flutter/material.dart';
-
-import 'package:app_students/ui/input_decorations.dart';
-import 'package:app_students/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
+import 'package:app_students/providers/login_form_provider.dart';
+import 'package:app_students/services/services.dart';
+import 'package:app_students/ui/input_decorations.dart';
+import 'package:app_students/widgets/widgets.dart';
+
+class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +20,8 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(height: 10),
-                  Text("Login", style: Theme.of(context).textTheme.headline4),
+                  Text("Crear cuenta",
+                      style: Theme.of(context).textTheme.headline4),
                   SizedBox(height: 20),
                   ChangeNotifierProvider(
                     create: (_) => LoginFormProvider(),
@@ -31,14 +32,13 @@ class LoginScreen extends StatelessWidget {
             ),
             SizedBox(height: 50),
             TextButton(
-              onPressed: () =>
-                  Navigator.pushReplacementNamed(context, 'register'),
+              onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
               style: ButtonStyle(
                   overlayColor: MaterialStateProperty.all(
                       Color.fromRGBO(40, 116, 166, 1).withOpacity(0.1)),
                   shape: MaterialStateProperty.all(StadiumBorder())),
               child: Text(
-                "Crear una nueva cuenta",
+                "¿Ya tienes una cuenta?",
                 style: TextStyle(fontSize: 18, color: Colors.black87),
               ),
             ),
@@ -65,7 +65,7 @@ class _LoginForm extends StatelessWidget {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecorations.authInputDecoration(
-                hintText: 'usuario@gmail.com',
+                hintText: 'usuario@galileo.edu',
                 labelText: 'Correo electrónico',
                 prefixIcon: Icons.alternate_email_rounded,
               ),
@@ -123,16 +123,15 @@ class _LoginForm extends StatelessWidget {
 
                       loginForm.isLoading = true;
 
-                      final String? errorMessage = await authService.login(
+                      final String? errorMessage = await authService.createUser(
                           loginForm.email, loginForm.password);
 
                       if (errorMessage == null) {
                         Navigator.pushReplacementNamed(context, 'home');
                       } else {
                         // print(errorMessage);
-                        // NotificationsService.showSnackbar(errorMessage);
                         String messageDescription =
-                            'Por favor, vuelva a ingresar sus credenciales';
+                            'Por favor, vuelva a intentarlo';
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
