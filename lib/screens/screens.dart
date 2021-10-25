@@ -3,3 +3,8 @@ export 'package:app_students/screens/login_screen.dart';
 export 'package:app_students/screens/register_screen.dart';
 export 'package:app_students/screens/check_auth_screen.dart';
 export 'package:app_students/services/notifications_service.dart';
+export 'package:app_students/screens/tabs_screen.dart';
+export 'package:app_students/screens/courses_screen.dart';
+export 'package:app_students/screens/settings_screen.dart';
+export 'package:app_students/screens/loading_screen.dart';
+export 'package:app_students/screens/assignments_screen.dart';

@@ -9,12 +9,14 @@ class CheckAuthScreen extends StatelessWidget {
     final authService = Provider.of<AuthService>(context, listen: false);
 
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
       body: Center(
         child: FutureBuilder(
-          future: authService.readToke(),
+          future: authService.readToken(),
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-            if (!snapshot.hasData) return Text('espere');
+            if (!snapshot.hasData) return Text('');
 
+            /// Validación para cuando no tengo token
             if (snapshot.data == '') {
               Future.microtask(() {
                 Navigator.pushReplacement(
@@ -25,19 +27,18 @@ class CheckAuthScreen extends StatelessWidget {
                     ));
               });
             } else {
+              /// Validación cuando si tengo token
               Future.microtask(() {
                 Navigator.pushReplacement(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => HomeScreen(),
+                      pageBuilder: (_, __, ___) => TabsScreen(),
                       transitionDuration: Duration(seconds: 0),
                     ));
               });
             }
 
-            return Container(
-              child: Text('Entrando a la aplicación'),
-            );
+            return Container();
           },
         ),
       ),

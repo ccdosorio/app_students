@@ -9,6 +9,8 @@ class AuthService extends ChangeNotifier {
   final String _baseUrl = 'identitytoolkit.googleapis.com';
   final String _firebaseToken = 'AIzaSyAuQJwY2eYs1_40xb4gMsI5r26gCVghWgA';
 
+  final String _baseUrlApi = 'apistudentsnodejs.herokuapp.com';
+
   final storage = new FlutterSecureStorage();
 
   /// Si retornamos hay un error, si no, todo bien
@@ -34,6 +36,7 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  // Llamada a endpoint Firebase
   Future<String?> login(String email, String password) async {
     final Map<String, dynamic> authData = {
       'email': email,
@@ -56,12 +59,35 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  // Llamada a endpoint nodejs
+  Future<String?> signIn(String email, String password) async {
+    final Map<String, dynamic> authData = {
+      'email': email,
+      'password': password
+    };
+    final url = Uri.https(_baseUrlApi, '/login');
+
+    final res = await http.post(url,
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(authData));
+
+    final Map<String, dynamic> decodedRes = json.decode(res.body);
+
+    if (decodedRes['status'] == 0) {
+      // Guardar token
+      await storage.write(key: 'token', value: decodedRes['data']['token']);
+      return null;
+    } else {
+      return decodedRes['message'];
+    }
+  }
+
   Future logout() async {
     await storage.delete(key: 'token');
     return;
   }
 
-  Future<String> readToke() async {
+  Future<String> readToken() async {
     return await storage.read(key: 'token') ?? '';
   }
 }

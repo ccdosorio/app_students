@@ -103,7 +103,7 @@ class _LoginForm extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10)),
               disabledColor: Colors.grey,
               elevation: 0,
-              color: Color.fromRGBO(40, 116, 166, 1),
+              color: Theme.of(context).primaryColor,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                 child: Text(
@@ -127,7 +127,7 @@ class _LoginForm extends StatelessWidget {
                           loginForm.email, loginForm.password);
 
                       if (errorMessage == null) {
-                        Navigator.pushReplacementNamed(context, 'home');
+                        Navigator.pushReplacementNamed(context, 'menu');
                       } else {
                         // print(errorMessage);
                         String messageDescription =

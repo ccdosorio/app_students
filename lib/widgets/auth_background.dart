@@ -42,7 +42,7 @@ class _BlueBox extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: size.height * 0.4,
-      decoration: _blueBackground(),
+      decoration: _blueBackground(context),
       child: Stack(
         children: [
           Positioned(child: _Bubble(), top: 90, left: 30),
@@ -55,11 +55,11 @@ class _BlueBox extends StatelessWidget {
     );
   }
 
-  BoxDecoration _blueBackground() => BoxDecoration(
+  BoxDecoration _blueBackground(BuildContext context) => BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color.fromRGBO(33, 97, 140, 1),
-            Color.fromRGBO(40, 116, 166, 1),
+            Theme.of(context).primaryColor,
+            Color.fromRGBO(6, 114, 189, 1),
           ],
         ),
       );
@@ -72,8 +72,9 @@ class _Bubble extends StatelessWidget {
       width: 100,
       height: 100,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100),
-          color: Color.fromRGBO(255, 255, 255, 0.05)),
+        borderRadius: BorderRadius.circular(100),
+        color: Color.fromRGBO(255, 255, 255, 0.05),
+      ),
     );
   }
 }

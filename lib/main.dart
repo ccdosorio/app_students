@@ -1,6 +1,10 @@
-import 'package:app_students/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:app_students/screens/screens.dart';
+import 'package:app_students/services/course_service.dart';
+import 'package:app_students/theme/theme.dart';
+import 'package:flutter/services.dart';
 import 'package:app_students/services/services.dart';
 
 void main() => runApp(AppState());
@@ -11,6 +15,8 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProvider(create: (_) => CareerService()),
+        ChangeNotifierProvider(create: (_) => CourseService()),
       ],
       child: MyApp(),
     );
@@ -20,19 +26,21 @@ class AppState extends StatelessWidget {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Students App',
-        initialRoute: 'checking',
-        routes: {
-          'checking': (_) => CheckAuthScreen(),
-          'login': (_) => LoginScreen(),
-          'register': (_) => RegisterScreen(),
-          'home': (_) => HomeScreen()
-        },
-        scaffoldMessengerKey: NotificationsService.messengerKey,
-        theme: ThemeData.light().copyWith(
-          scaffoldBackgroundColor: Colors.grey[300],
-        ));
+      debugShowCheckedModeBanner: false,
+      title: 'Students App',
+      initialRoute: 'checking',
+      routes: {
+        'checking': (_) => CheckAuthScreen(),
+        'login': (_) => LoginScreen(),
+        'register': (_) => RegisterScreen(),
+        'menu': (_) => TabsScreen(),
+        'courses': (_) => CoursesScreen(),
+        'settings': (_) => SettingsScreen(),
+      },
+      theme: myThemeLight,
+    );
   }
 }

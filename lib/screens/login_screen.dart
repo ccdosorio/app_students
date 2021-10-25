@@ -12,40 +12,41 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AuthBrackground(
-          child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 250),
-            CardContainer(
-              child: Column(
-                children: [
-                  SizedBox(height: 10),
-                  Text("Login", style: Theme.of(context).textTheme.headline4),
-                  SizedBox(height: 20),
-                  ChangeNotifierProvider(
-                    create: (_) => LoginFormProvider(),
-                    child: _LoginForm(),
-                  )
-                ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 250),
+              CardContainer(
+                child: Column(
+                  children: [
+                    SizedBox(height: 10),
+                    Text("Login", style: Theme.of(context).textTheme.headline4),
+                    SizedBox(height: 20),
+                    ChangeNotifierProvider(
+                      create: (_) => LoginFormProvider(),
+                      child: _LoginForm(),
+                    )
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 50),
-            TextButton(
-              onPressed: () =>
-                  Navigator.pushReplacementNamed(context, 'register'),
-              style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.all(
-                      Color.fromRGBO(40, 116, 166, 1).withOpacity(0.1)),
-                  shape: MaterialStateProperty.all(StadiumBorder())),
-              child: Text(
-                "Crear una nueva cuenta",
-                style: TextStyle(fontSize: 18, color: Colors.black87),
+              SizedBox(height: 50),
+              TextButton(
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, 'register'),
+                style: ButtonStyle(
+                    overlayColor: MaterialStateProperty.all(
+                        Color.fromRGBO(40, 116, 166, 1).withOpacity(0.1)),
+                    shape: MaterialStateProperty.all(StadiumBorder())),
+                child: Text(
+                  "Crear una nueva cuenta",
+                  style: TextStyle(fontSize: 18, color: Colors.black87),
+                ),
               ),
-            ),
-            SizedBox(height: 50),
-          ],
+              SizedBox(height: 50),
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }
@@ -103,7 +104,7 @@ class _LoginForm extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10)),
               disabledColor: Colors.grey,
               elevation: 0,
-              color: Color.fromRGBO(40, 116, 166, 1),
+              color: Theme.of(context).primaryColor,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                 child: Text(
@@ -121,16 +122,14 @@ class _LoginForm extends StatelessWidget {
 
                       if (!loginForm.isValidForm()) return;
 
-                      loginForm.isLoading = true;
+                      // loginForm.isLoading = true;
 
-                      final String? errorMessage = await authService.login(
+                      final String? errorMessage = await authService.signIn(
                           loginForm.email, loginForm.password);
 
                       if (errorMessage == null) {
-                        Navigator.pushReplacementNamed(context, 'home');
+                        Navigator.pushReplacementNamed(context, 'menu');
                       } else {
-                        // print(errorMessage);
-                        // NotificationsService.showSnackbar(errorMessage);
                         String messageDescription =
                             'Por favor, vuelva a ingresar sus credenciales';
                         showDialog(
