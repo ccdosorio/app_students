@@ -1,8 +1,9 @@
 // import 'package:app_students/ui/alert_dialogs.dart';
+import 'package:app_students/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:app_students/providers/login_form_provider.dart';
+import 'package:app_students/providers/register_form_provider.dart';
 // import 'package:app_students/services/services.dart';
 import 'package:app_students/ui/input_decorations.dart';
 import 'package:app_students/widgets/widgets.dart';
@@ -12,55 +13,72 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AuthBrackground(
-          child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 250),
-            CardContainer(
-              child: Column(
-                children: [
-                  SizedBox(height: 10),
-                  Text("Crear cuenta",
-                      style: Theme.of(context).textTheme.headline4),
-                  SizedBox(height: 20),
-                  ChangeNotifierProvider(
-                    create: (_) => LoginFormProvider(),
-                    child: _LoginForm(),
-                  )
-                ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 250),
+              CardContainer(
+                child: Column(
+                  children: [
+                    SizedBox(height: 10),
+                    Text("Crear cuenta",
+                        style: Theme.of(context).textTheme.headline4),
+                    SizedBox(height: 20),
+                    ChangeNotifierProvider(
+                      create: (_) => RegisterFormProvider(),
+                      child: _RegisterForm(),
+                    )
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 50),
-            TextButton(
-              onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
-              style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.all(
-                      Color.fromRGBO(40, 116, 166, 1).withOpacity(0.1)),
-                  shape: MaterialStateProperty.all(StadiumBorder())),
-              child: Text(
-                "¿Ya tienes una cuenta?",
-                style: TextStyle(fontSize: 18, color: Colors.black87),
+              SizedBox(height: 50),
+              TextButton(
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, 'login'),
+                style: ButtonStyle(
+                    overlayColor: MaterialStateProperty.all(
+                        Color.fromRGBO(40, 116, 166, 1).withOpacity(0.1)),
+                    shape: MaterialStateProperty.all(StadiumBorder())),
+                child: Text(
+                  "¿Ya tienes una cuenta?",
+                  style: TextStyle(fontSize: 18, color: Colors.black87),
+                ),
               ),
-            ),
-            SizedBox(height: 50),
-          ],
+              SizedBox(height: 50),
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }
 
-class _LoginForm extends StatelessWidget {
+class _RegisterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final loginForm = Provider.of<LoginFormProvider>(context);
+    final registerForm = Provider.of<RegisterFormProvider>(context);
 
     return Container(
       child: Form(
-        key: loginForm.formKey,
+        key: registerForm.formKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
+            TextFormField(
+              autocorrect: false,
+              keyboardType: TextInputType.number,
+              decoration: InputDecorations.authInputDecoration(
+                hintText: 'Carnet',
+                labelText: 'Carnet',
+                prefixIcon: Icons.person_outline_rounded,
+              ),
+              onChanged: (value) => registerForm.carnet = value,
+              validator: (value) {
+                if (value != null && value.length == 9) return null;
+                return 'El carnet debe ser de 9 caracteres';
+              },
+            ),
+            SizedBox(height: 30),
             TextFormField(
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
@@ -69,7 +87,7 @@ class _LoginForm extends StatelessWidget {
                 labelText: 'Correo electrónico',
                 prefixIcon: Icons.alternate_email_rounded,
               ),
-              onChanged: (value) => loginForm.email = value,
+              onChanged: (value) => registerForm.email = value,
               validator: (value) {
                 String pattern =
                     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -91,7 +109,7 @@ class _LoginForm extends StatelessWidget {
                 labelText: 'Contraseña',
                 prefixIcon: Icons.lock_outline,
               ),
-              onChanged: (value) => loginForm.password = value,
+              onChanged: (value) => registerForm.password = value,
               validator: (value) {
                 if (value != null && value.length >= 6) return null;
                 return 'La contraseña debe ser de 6 caracteres';
@@ -107,29 +125,30 @@ class _LoginForm extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                 child: Text(
-                  loginForm.isLoading ? 'Espere...' : 'Ingresar',
+                  registerForm.isLoading ? 'Espere...' : 'Ingresar',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
-              onPressed: loginForm.isLoading
+              onPressed: registerForm.isLoading
                   ? null
                   : () async {
-                      // FocusScope.of(context).unfocus();
+                      FocusScope.of(context).unfocus();
 
-                      // final authService =
-                      //     Provider.of<AuthService>(context, listen: false);
+                      final authService =
+                          Provider.of<AuthService>(context, listen: false);
 
-                      // if (!loginForm.isValidForm()) return;
+                      if (!registerForm.isValidForm()) return;
 
-                      // loginForm.isLoading = true;
+                      registerForm.isLoading = true;
 
-                      // final String? errorMessage = await authService.createUser(
-                      //     loginForm.email, loginForm.password);
+                      final String? errorMessage = await authService.signup(
+                          registerForm.email,
+                          registerForm.password,
+                          registerForm.carnet);
 
                       // if (errorMessage == null) {
-                      //   Navigator.pushReplacementNamed(context, 'menu');
+                      //   Navigator.pushReplacementNamed(context, 'login');
                       // } else {
-                      //   // print(errorMessage);
                       //   String messageDescription =
                       //       'Por favor, vuelva a intentarlo';
                       //   showDialog(
@@ -141,7 +160,7 @@ class _LoginForm extends StatelessWidget {
                       //           description: messageDescription,
                       //         );
                       //       });
-                      //   loginForm.isLoading = false;
+                      //   registerForm.isLoading = false;
                       // }
                     },
             )

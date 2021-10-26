@@ -59,7 +59,7 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  // Llamada a endpoint nodejs
+  // Llamada a endpoint nodejs: Login
   Future<String?> signIn(String email, String password) async {
     final Map<String, dynamic> authData = {
       'email': email,
@@ -81,6 +81,33 @@ class AuthService extends ChangeNotifier {
     } else {
       return decodedRes['message'];
     }
+  }
+
+  // Llamada a endpoint nodejs: Register
+  Future<String?> signup(String email, String password, String carnet) async {
+    print("signup");
+    final carnetNumber = int.parse(carnet);
+
+    final Map<String, dynamic> authData = {
+      'carnet': carnetNumber,
+      'email': email,
+      'password': password
+    };
+    print("authData");
+    print(authData);
+    // final url = Uri.https(_baseUrlApi, '/usuarios');
+
+    // final res = await http.post(url,
+    //     headers: {"Content-Type": "application/json"},
+    //     body: json.encode(authData));
+
+    // final Map<String, dynamic> decodedRes = json.decode(res.body);
+
+    // if (decodedRes['status'] == 0) {
+    //   return null;
+    // } else {
+    //   return decodedRes['message'];
+    // }
   }
 
   Future logout() async {
