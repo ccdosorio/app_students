@@ -1,9 +1,9 @@
-import 'package:app_students/ui/alert_dialogs.dart';
+// import 'package:app_students/ui/alert_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:app_students/providers/login_form_provider.dart';
-import 'package:app_students/services/services.dart';
+// import 'package:app_students/services/services.dart';
 import 'package:app_students/ui/input_decorations.dart';
 import 'package:app_students/widgets/widgets.dart';
 
@@ -114,35 +114,35 @@ class _LoginForm extends StatelessWidget {
               onPressed: loginForm.isLoading
                   ? null
                   : () async {
-                      FocusScope.of(context).unfocus();
+                      // FocusScope.of(context).unfocus();
 
-                      final authService =
-                          Provider.of<AuthService>(context, listen: false);
+                      // final authService =
+                      //     Provider.of<AuthService>(context, listen: false);
 
-                      if (!loginForm.isValidForm()) return;
+                      // if (!loginForm.isValidForm()) return;
 
-                      loginForm.isLoading = true;
+                      // loginForm.isLoading = true;
 
-                      final String? errorMessage = await authService.createUser(
-                          loginForm.email, loginForm.password);
+                      // final String? errorMessage = await authService.createUser(
+                      //     loginForm.email, loginForm.password);
 
-                      if (errorMessage == null) {
-                        Navigator.pushReplacementNamed(context, 'menu');
-                      } else {
-                        // print(errorMessage);
-                        String messageDescription =
-                            'Por favor, vuelva a intentarlo';
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialogs.showAlertLogin(
-                                context: context,
-                                message: errorMessage,
-                                description: messageDescription,
-                              );
-                            });
-                        loginForm.isLoading = false;
-                      }
+                      // if (errorMessage == null) {
+                      //   Navigator.pushReplacementNamed(context, 'menu');
+                      // } else {
+                      //   // print(errorMessage);
+                      //   String messageDescription =
+                      //       'Por favor, vuelva a intentarlo';
+                      //   showDialog(
+                      //       context: context,
+                      //       builder: (BuildContext context) {
+                      //         return AlertDialogs.showAlertLogin(
+                      //           context: context,
+                      //           message: errorMessage,
+                      //           description: messageDescription,
+                      //         );
+                      //       });
+                      //   loginForm.isLoading = false;
+                      // }
                     },
             )
           ],

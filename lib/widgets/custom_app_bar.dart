@@ -20,9 +20,9 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
         IconButton(
           icon: Icon(Icons.login_outlined),
           iconSize: 28.0,
-          onPressed: () {
-            authService.logout();
-            Navigator.pushReplacementNamed(context, 'login');
+          onPressed: () async {
+            await authService.logout();
+            await Navigator.pushReplacementNamed(context, 'login');
           },
         ),
       ],

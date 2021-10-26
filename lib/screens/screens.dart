@@ -7,4 +7,3 @@ export 'package:app_students/screens/tabs_screen.dart';
 export 'package:app_students/screens/courses_screen.dart';
 export 'package:app_students/screens/settings_screen.dart';
 export 'package:app_students/screens/loading_screen.dart';
-export 'package:app_students/screens/assignments_screen.dart';

@@ -13,7 +13,7 @@ class CourseResponse {
     required this.data,
   });
 
-  String status;
+  int status;
   String message;
   List<Course> data;
 

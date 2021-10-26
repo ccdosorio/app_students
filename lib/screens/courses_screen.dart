@@ -12,17 +12,22 @@ class CoursesScreen extends StatelessWidget {
 
     if (courseService.isLoading) return LoadingScreen();
 
+    if (courseService.courses.length == 0) {
+      return Scaffold(
+        appBar: CustomAppBar(title: 'Cursos Actuales'),
+        body: Center(
+          child: Text('El alumno no tiene asignaciones'),
+        ),
+      );
+    }
+
     return Scaffold(
-      appBar: CustomAppBar(title: 'Cursos'),
+      appBar: CustomAppBar(title: 'Cursos Actuales'),
       body: ListView.builder(
         itemCount: courseService.courses.length,
         itemBuilder: (BuildContext context, int index) => CardCourse(
           course: courseService.courses[index],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {},
       ),
     );
   }

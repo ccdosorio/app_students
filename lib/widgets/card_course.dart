@@ -1,4 +1,4 @@
-import 'package:app_students/screens/screens.dart';
+// import 'package:app_students/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:app_students/models/models.dart';
 
@@ -12,10 +12,13 @@ class CardCourse extends StatelessWidget {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => AssignmentsScreen(course: course))),
+      // onTap: () => Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => AssignmentsScreen(course: course),
+      //   ),
+      // ),
+      onTap: () {},
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Container(
@@ -42,17 +45,17 @@ class CardCourse extends StatelessWidget {
                   children: [
                     SizedBox(height: 25),
                     Text(
-                      course.nombre,
+                      course.curso,
                       style: textTheme.headline5,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),
-                    Text(
-                      course.carrera,
-                      style: textTheme.subtitle1,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
+                    // Text(
+                    //   course.carrera,
+                    //   style: textTheme.subtitle1,
+                    //   overflow: TextOverflow.ellipsis,
+                    //   maxLines: 2,
+                    // ),
                   ],
                 ),
               )
