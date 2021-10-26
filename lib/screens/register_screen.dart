@@ -1,5 +1,6 @@
 // import 'package:app_students/ui/alert_dialogs.dart';
 import 'package:app_students/services/services.dart';
+import 'package:app_students/ui/alert_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +8,7 @@ import 'package:app_students/providers/register_form_provider.dart';
 // import 'package:app_students/services/services.dart';
 import 'package:app_students/ui/input_decorations.dart';
 import 'package:app_students/widgets/widgets.dart';
+import 'package:select_form_field/select_form_field.dart';
 
 class RegisterScreen extends StatelessWidget {
   @override
@@ -57,6 +59,20 @@ class _RegisterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final registerForm = Provider.of<RegisterFormProvider>(context);
+    final List<Map<String, dynamic>> _items = [
+      {
+        'value': '1',
+        'label': 'Estudiante',
+        'icon': Icon(Icons.person_outlined),
+        'textStyle': TextStyle(color: Colors.blue),
+      },
+      {
+        'value': '2',
+        'label': 'Catedratico',
+        'icon': Icon(Icons.person_outlined),
+        'textStyle': TextStyle(color: Colors.blue),
+      },
+    ];
 
     return Container(
       child: Form(
@@ -77,6 +93,75 @@ class _RegisterForm extends StatelessWidget {
                 if (value != null && value.length == 9) return null;
                 return 'El carnet debe ser de 9 caracteres';
               },
+            ),
+            SizedBox(height: 30),
+            TextFormField(
+              autocorrect: false,
+              keyboardType: TextInputType.text,
+              decoration: InputDecorations.authInputDecoration(
+                hintText: 'Nombre',
+                labelText: 'Nombre',
+                prefixIcon: Icons.person_pin,
+              ),
+              onChanged: (value) => registerForm.name = value,
+              validator: (value) {
+                if (value != null && value.length > 0) return null;
+                return 'El nombre es obligatorio';
+              },
+            ),
+            SizedBox(height: 30),
+            TextFormField(
+              autocorrect: false,
+              keyboardType: TextInputType.text,
+              decoration: InputDecorations.authInputDecoration(
+                hintText: 'Apellido',
+                labelText: 'Apellido',
+                prefixIcon: Icons.person_pin_rounded,
+              ),
+              onChanged: (value) => registerForm.surname = value,
+              validator: (value) {
+                if (value != null && value.length > 0) return null;
+                return 'El apellido es obligatorio';
+              },
+            ),
+            SizedBox(height: 30),
+            TextFormField(
+              autocorrect: false,
+              keyboardType: TextInputType.text,
+              decoration: InputDecorations.authInputDecoration(
+                hintText: 'Username',
+                labelText: 'Username',
+                prefixIcon: Icons.person_pin_outlined,
+              ),
+              onChanged: (value) => registerForm.username = value,
+              validator: (value) {
+                if (value != null && value.length > 0) return null;
+                return 'El username es obligatorio';
+              },
+            ),
+            SizedBox(height: 30),
+            TextFormField(
+              autocorrect: false,
+              keyboardType: TextInputType.text,
+              decoration: InputDecorations.authInputDecoration(
+                hintText: 'Carrera',
+                labelText: 'Carrera',
+                prefixIcon: Icons.personal_injury,
+              ),
+              onChanged: (value) => {registerForm.carrer = value},
+              validator: (value) {
+                if (value != null && value.length > 0) return null;
+                return 'La carrera es obligatoria';
+              },
+            ),
+            SizedBox(height: 30),
+            SelectFormField(
+              keyboardType: TextInputType.text,
+              type: SelectFormFieldType.dropdown, // or can be dialog
+              icon: Icon(Icons.person_outlined),
+              labelText: 'Tipo',
+              items: _items,
+              onChanged: (value) => {print(value), registerForm.type = value},
             ),
             SizedBox(height: 30),
             TextFormField(
@@ -141,27 +226,34 @@ class _RegisterForm extends StatelessWidget {
 
                       registerForm.isLoading = true;
 
+                      print(registerForm.type);
+
                       final String? errorMessage = await authService.signup(
+                          registerForm.name,
+                          registerForm.surname,
+                          registerForm.username,
+                          registerForm.carrer,
+                          registerForm.type,
                           registerForm.email,
                           registerForm.password,
                           registerForm.carnet);
 
-                      // if (errorMessage == null) {
-                      //   Navigator.pushReplacementNamed(context, 'login');
-                      // } else {
-                      //   String messageDescription =
-                      //       'Por favor, vuelva a intentarlo';
-                      //   showDialog(
-                      //       context: context,
-                      //       builder: (BuildContext context) {
-                      //         return AlertDialogs.showAlertLogin(
-                      //           context: context,
-                      //           message: errorMessage,
-                      //           description: messageDescription,
-                      //         );
-                      //       });
-                      //   registerForm.isLoading = false;
-                      // }
+                      if (errorMessage == null) {
+                        Navigator.pushReplacementNamed(context, 'login');
+                      } else {
+                        String messageDescription =
+                            'Por favor, vuelva a intentarlo';
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialogs.showAlertLogin(
+                                context: context,
+                                message: errorMessage,
+                                description: messageDescription,
+                              );
+                            });
+                        registerForm.isLoading = false;
+                      }
                     },
             )
           ],

@@ -9,6 +9,8 @@ class RegisterFormProvider extends ChangeNotifier {
   String name = '';
   String surname = '';
   String username = '';
+  String carrer = '';
+  String type = '';
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;

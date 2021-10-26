@@ -84,30 +84,47 @@ class AuthService extends ChangeNotifier {
   }
 
   // Llamada a endpoint nodejs: Register
-  Future<String?> signup(String email, String password, String carnet) async {
+  Future<String?> signup(
+      String name,
+      String surname,
+      String username,
+      String carrer,
+      String type,
+      String email,
+      String password,
+      String carnet) async {
     print("signup");
+
     final carnetNumber = int.parse(carnet);
+    final carrerNumber = int.parse(carrer);
+    final typeNumber = int.parse(type);
 
     final Map<String, dynamic> authData = {
       'carnet': carnetNumber,
-      'email': email,
-      'password': password
+      'nombre': name,
+      'apellido': surname,
+      'user': username,
+      'idc': carrerNumber,
+      'codigot': typeNumber,
+      'password': password,
+      'email': email
     };
     print("authData");
     print(authData);
-    // final url = Uri.https(_baseUrlApi, '/usuarios');
 
-    // final res = await http.post(url,
-    //     headers: {"Content-Type": "application/json"},
-    //     body: json.encode(authData));
+    final url = Uri.https(_baseUrlApi, '/usuarios');
 
-    // final Map<String, dynamic> decodedRes = json.decode(res.body);
+    final res = await http.post(url,
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(authData));
 
-    // if (decodedRes['status'] == 0) {
-    //   return null;
-    // } else {
-    //   return decodedRes['message'];
-    // }
+    final Map<String, dynamic> decodedRes = json.decode(res.body);
+
+    if (decodedRes['status'] == 0) {
+      return null;
+    } else {
+      return decodedRes['message'];
+    }
   }
 
   Future logout() async {
