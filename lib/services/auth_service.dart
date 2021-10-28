@@ -133,7 +133,7 @@ class AuthService extends ChangeNotifier {
     final res = await http.get(url, headers: {
       "Content-Type": "application/json",
       "Authorization":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RpZ291IjozLCJub21icmUiOiJWaWN0b3IiLCJhcGVsbGlkbyI6IkFtYWRvIiwiY2FybmV0IjoxOTAwMzY0OCwidXNlciI6InZhbWFkbyIsImVtYWlsIjoidmljdG9yLmFtYWRvQGdhbGlsZW8uZWR1IiwiaWF0IjoxNjM1Mzg2MDI2LCJleHAiOjE2MzUzODk2MjZ9.9Qr_pJVJKJrA491F0cwhzhgJHY-cjY95qfBivwIjHkA"
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RpZ291IjozLCJub21icmUiOiJWaWN0b3IiLCJhcGVsbGlkbyI6IkFtYWRvIiwiY2FybmV0IjoxOTAwMzY0OCwidXNlciI6InZhbWFkbyIsImVtYWlsIjoidmljdG9yLmFtYWRvQGdhbGlsZW8uZWR1IiwiaWF0IjoxNjM1NDAzODM5LCJleHAiOjE2MzU0MDc0Mzl9.MBtCP45NRzePxGmfbJpNV1bbY-Vo_N9CBMdfVsOuha0"
     });
 
     final Map<String, dynamic> decodedRes = await json.decode(res.body);
