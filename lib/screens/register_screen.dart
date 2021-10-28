@@ -1,4 +1,7 @@
 // import 'package:app_students/ui/alert_dialogs.dart';
+
+import 'dart:io';
+
 import 'package:app_students/services/services.dart';
 import 'package:app_students/ui/alert_dialogs.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +14,17 @@ import 'package:app_students/widgets/widgets.dart';
 import 'package:select_form_field/select_form_field.dart';
 
 class RegisterScreen extends StatelessWidget {
+  static List<Map<String, dynamic>>? items2;
+
   @override
   Widget build(BuildContext context) {
+    //List<Map<String, dynamic>> items2 = [];
+    _createItemsCarrera(context).then((value) {
+      items2 = value;
+    });
+
+    sleep(Duration(seconds: 5));
+
     return Scaffold(
       body: AuthBrackground(
         child: SingleChildScrollView(
@@ -59,10 +71,13 @@ class _RegisterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final registerForm = Provider.of<RegisterFormProvider>(context);
-    final List<Map<String, dynamic>> _items = [
+
+    List<Map<String, dynamic>>? _items = RegisterScreen.items2;
+
+    /*[
       {
         'value': '1',
-        'label': 'Estudiante',
+        'label': 'Estudiantes',
         'icon': Icon(Icons.person_outlined),
         'textStyle': TextStyle(color: Colors.blue),
       },
@@ -72,7 +87,11 @@ class _RegisterForm extends StatelessWidget {
         'icon': Icon(Icons.person_outlined),
         'textStyle': TextStyle(color: Colors.blue),
       },
-    ];
+    ];*/
+
+    print('RegisterScreen.items2');
+
+    print(RegisterScreen.items2);
 
     return Container(
       child: Form(
@@ -160,7 +179,7 @@ class _RegisterForm extends StatelessWidget {
               type: SelectFormFieldType.dropdown, // or can be dialog
               icon: Icon(Icons.person_outlined),
               labelText: 'Tipo',
-              items: _items,
+              items: _items, //_items,
               onChanged: (value) => {print(value), registerForm.type = value},
             ),
             SizedBox(height: 30),
@@ -261,4 +280,26 @@ class _RegisterForm extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<List<Map<String, dynamic>>> _createItemsCarrera(
+    BuildContext context) async {
+  List<Map<String, dynamic>> items = [];
+  final authService = Provider.of<AuthService>(context, listen: false);
+
+  final List<dynamic> carreras = await authService.getCarreras();
+  print('_crearItemsCarrera');
+  print(carreras);
+
+  carreras.forEach((opt) {
+    final listTemp = {
+      'value': opt['idc'],
+      'label': opt['carrera'],
+      'icon': Icon(Icons.person_outlined),
+      'textStyle': TextStyle(color: Colors.blue),
+    };
+    items.add(listTemp);
+  });
+  print(items);
+  return (items);
 }
