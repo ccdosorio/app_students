@@ -128,6 +128,25 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  Future<List<dynamic>> getCarreras() async {
+    final url = Uri.https(_baseUrlApi, '/carreras');
+    final res = await http.get(url, headers: {
+      "Content-Type": "application/json",
+      "Authorization":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RpZ291IjozLCJub21icmUiOiJWaWN0b3IiLCJhcGVsbGlkbyI6IkFtYWRvIiwiY2FybmV0IjoxOTAwMzY0OCwidXNlciI6InZhbWFkbyIsImVtYWlsIjoidmljdG9yLmFtYWRvQGdhbGlsZW8uZWR1IiwiaWF0IjoxNjM1NDAzODM5LCJleHAiOjE2MzU0MDc0Mzl9.MBtCP45NRzePxGmfbJpNV1bbY-Vo_N9CBMdfVsOuha0"
+    });
+
+    final Map<String, dynamic> decodedRes = await json.decode(res.body);
+
+    final List<dynamic> fault = [decodedRes['status']];
+
+    if (decodedRes['status'].toString() != "0") {
+      return fault;
+    } else {
+      return decodedRes['data'];
+    }
+  }
+
   Future logout() async {
     await storage.delete(key: 'token');
     await storage.delete(key: 'iduser');

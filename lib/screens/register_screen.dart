@@ -1,4 +1,7 @@
 // import 'package:app_students/ui/alert_dialogs.dart';
+
+import 'dart:io';
+
 import 'package:app_students/services/services.dart';
 import 'package:app_students/ui/alert_dialogs.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +13,43 @@ import 'package:app_students/ui/input_decorations.dart';
 import 'package:app_students/widgets/widgets.dart';
 import 'package:select_form_field/select_form_field.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  static List<Map<String, dynamic>> items2 = [];
+  static List<Map<String, dynamic>> items3 = [];
+
   @override
   Widget build(BuildContext context) {
+    //List<Map<String, dynamic>> items2 = [];
+    _createItemsCarrera(context).then((value) {
+      items3 = value;
+      print('value');
+      print(value);
+    }).whenComplete(() {
+      setState(() {
+        items2 = items3;
+
+        print('_createItemsCarrera finalizado');
+      });
+    });
+
+    //for (int i = 0; i < 1; i++) {
+    /*if (items2.length == 0) {
+      //i--;
+      print('sleep 1 second');
+      print('items2');
+      print(items2);
+      print(items2.length);
+      print('items3');
+      print(items3);
+      //sleep(Duration(seconds: 10));
+    }*/
+    //}
+
     return Scaffold(
       body: AuthBrackground(
         child: SingleChildScrollView(
@@ -59,7 +96,9 @@ class _RegisterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final registerForm = Provider.of<RegisterFormProvider>(context);
-    final List<Map<String, dynamic>> _items = [
+
+    List<Map<String, dynamic>>? _itemsCarreras = _RegisterScreenState.items2;
+    List<Map<String, dynamic>>? _itemsTipos = [
       {
         'value': '1',
         'label': 'Estudiante',
@@ -140,27 +179,27 @@ class _RegisterForm extends StatelessWidget {
               },
             ),
             SizedBox(height: 30),
-            TextFormField(
-              autocorrect: false,
+            SelectFormField(
               keyboardType: TextInputType.text,
-              decoration: InputDecorations.authInputDecoration(
-                hintText: 'Carrera',
-                labelText: 'Carrera',
-                prefixIcon: Icons.personal_injury,
+              type: SelectFormFieldType.dropdown, // or can be dialog
+              icon: Icon(
+                Icons.personal_injury,
+                color: Colors.blue,
               ),
-              onChanged: (value) => {registerForm.carrer = value},
-              validator: (value) {
-                if (value != null && value.length > 0) return null;
-                return 'La carrera es obligatoria';
-              },
+              labelText: 'Carrera',
+              items: _itemsCarreras, //_items,
+              onChanged: (value) => {print(value), registerForm.carrer = value},
             ),
             SizedBox(height: 30),
             SelectFormField(
               keyboardType: TextInputType.text,
               type: SelectFormFieldType.dropdown, // or can be dialog
-              icon: Icon(Icons.person_outlined),
+              icon: Icon(
+                Icons.person_outlined,
+                color: Colors.blue,
+              ),
               labelText: 'Tipo',
-              items: _items,
+              items: _itemsTipos, //_items,
               onChanged: (value) => {print(value), registerForm.type = value},
             ),
             SizedBox(height: 30),
@@ -210,7 +249,7 @@ class _RegisterForm extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                 child: Text(
-                  registerForm.isLoading ? 'Espere...' : 'Ingresar',
+                  registerForm.isLoading ? 'Espere...' : 'Crear',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -261,4 +300,26 @@ class _RegisterForm extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<List<Map<String, dynamic>>> _createItemsCarrera(
+    BuildContext context) async {
+  List<Map<String, dynamic>> items = [];
+  final authService = Provider.of<AuthService>(context, listen: false);
+
+  final List<dynamic> carreras = await authService.getCarreras();
+  print('_crearItemsCarrera');
+  print(carreras);
+
+  carreras.forEach((opt) {
+    final listTemp = {
+      'value': opt['idc'],
+      'label': opt['carrera'],
+      'icon': Icon(Icons.person_outlined),
+      'textStyle': TextStyle(color: Colors.blue),
+    };
+    items.add(listTemp);
+  });
+  print(items);
+  return (items);
 }
