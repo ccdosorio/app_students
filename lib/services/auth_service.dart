@@ -144,6 +144,22 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  Future<List<dynamic>> getTypes() async {
+    final url = Uri.https(_baseUrlApi, '/type');
+    final res =
+        await http.get(url, headers: {"Content-Type": "application/json"});
+
+    final Map<String, dynamic> decodedRes = await json.decode(res.body);
+
+    final List<dynamic> fault = [decodedRes['status']];
+
+    if (decodedRes['status'].toString() != "0") {
+      return fault;
+    } else {
+      return decodedRes['data'];
+    }
+  }
+
   Future logout() async {
     await storage.delete(key: 'token');
     await storage.delete(key: 'iduser');
