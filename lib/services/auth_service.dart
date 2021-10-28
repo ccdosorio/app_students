@@ -76,7 +76,8 @@ class AuthService extends ChangeNotifier {
     if (decodedRes['status'] == 0) {
       // Guardar token
       await storage.write(key: 'token', value: decodedRes['data']['token']);
-      await storage.write(key: 'user', value: json.encode(decodedRes['data']));
+      await storage.write(
+          key: 'iduser', value: decodedRes['data']['codigou'].toString());
       return null;
     } else {
       return decodedRes['message'];
@@ -129,7 +130,7 @@ class AuthService extends ChangeNotifier {
 
   Future logout() async {
     await storage.delete(key: 'token');
-    await storage.delete(key: 'usert');
+    await storage.delete(key: 'iduser');
     return;
   }
 

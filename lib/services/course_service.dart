@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -7,12 +8,14 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:app_students/models/models.dart';
 
-class CourseService extends ChangeNotifier {
+class CourseService {
   final String _baseURL = 'apistudentsnodejs.herokuapp.com';
   final storage = new FlutterSecureStorage();
 
+  StreamController<List<Course>> _streamController = new StreamController();
+  StreamController<List<Course>> get streamController => _streamController;
+
   List<Course> courses = [];
-  bool isLoading = true;
 
   CourseService() {
     this.loadCourses();
@@ -32,19 +35,19 @@ class CourseService extends ChangeNotifier {
   }
 
   loadCourses() async {
-    this.isLoading = true;
-    notifyListeners();
 
-    final String? authUser = await storage.read(key: 'user');
-    final Map<String, dynamic> decodedRes = json.decode(authUser!);
+    final idUser = await storage.read(key: 'iduser');
 
-    final iduser = decodedRes['codigou'];
-
-    final jsonData = await _getJsonData('/asignaciones/$iduser');
+    final jsonData = await _getJsonData('/asignaciones/$idUser');
     final courseResponse = CourseResponse.fromJson(jsonData);
 
     this.courses = courseResponse.data;
-    this.isLoading = false;
-    notifyListeners();
+
+    _streamController.sink.add(this.courses);
+
+  }
+
+  dispose() {
+    _streamController.close();
   }
 }

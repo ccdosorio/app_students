@@ -115,6 +115,7 @@ class _LoginForm extends StatelessWidget {
               onPressed: loginForm.isLoading
                   ? null
                   : () async {
+
                       FocusScope.of(context).unfocus();
 
                       final authService =
