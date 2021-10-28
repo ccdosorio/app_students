@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -35,7 +33,6 @@ class CourseService {
   }
 
   loadCourses() async {
-
     final idUser = await storage.read(key: 'iduser');
 
     final jsonData = await _getJsonData('/asignaciones/$idUser');
@@ -44,7 +41,6 @@ class CourseService {
     this.courses = courseResponse.data;
 
     _streamController.sink.add(this.courses);
-
   }
 
   dispose() {
