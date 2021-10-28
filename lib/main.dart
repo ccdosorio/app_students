@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:app_students/screens/screens.dart';
-import 'package:app_students/services/course_service.dart';
 import 'package:app_students/theme/theme.dart';
 import 'package:flutter/services.dart';
 import 'package:app_students/services/services.dart';
@@ -14,9 +13,7 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthService()),
-        ChangeNotifierProvider(create: (_) => CareerService()),
-        ChangeNotifierProvider(create: (_) => CourseService()),
+        ChangeNotifierProvider(create: (_) => new AuthService()),
       ],
       child: MyApp(),
     );
@@ -31,7 +28,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Students App',
-      initialRoute: 'checking',
+      initialRoute: 'login',
       routes: {
         'checking': (_) => CheckAuthScreen(),
         'login': (_) => LoginScreen(),
