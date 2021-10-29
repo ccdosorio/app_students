@@ -7,3 +7,7 @@ export 'package:app_students/screens/tabs_screen.dart';
 export 'package:app_students/screens/courses_screen.dart';
 export 'package:app_students/screens/settings_screen.dart';
 export 'package:app_students/screens/loading_screen.dart';
+export 'package:app_students/screens/profile_screen.dart';
+export 'package:app_students/screens/profile_header_screen.dart';
+export 'package:app_students/screens/profile_info_list_screen.dart';
+export 'package:app_students/screens/profile_form_screen.dart';

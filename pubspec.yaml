@@ -28,6 +28,7 @@ dependencies:
   http: ^0.13.3
   provider: ^6.0.1
   select_form_field: "^2.2.0"
+  getwidget: ^2.0.4
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +49,7 @@ flutter:
     - assets/school.png
     - assets/online-course.png
     - assets/student.png
+    - assets/user.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see

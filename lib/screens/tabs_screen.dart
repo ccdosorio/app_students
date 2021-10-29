@@ -69,12 +69,7 @@ class _Pages extends StatelessWidget {
       children: [
         HomeScreen(),
         CoursesScreen(),
-        Container(
-          color: Colors.green,
-          child: Center(
-            child: Text('Perfil'),
-          ),
-        ),
+        ProfileScreen(),
       ],
     );
   }

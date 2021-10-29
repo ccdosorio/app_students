@@ -10,8 +10,6 @@ class CareerService {
   final String _baseURL = 'apistudentsnodejs.herokuapp.com';
   final storage = new FlutterSecureStorage();
 
-  bool isLoading = true;
-
   StreamController<List<Career>> _streamController = new StreamController();
   StreamController<List<Career>> get streamController => _streamController;
 
