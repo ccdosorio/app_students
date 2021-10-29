@@ -14,36 +14,28 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  static List<Map<String, dynamic>> items2 = [];
-  static List<Map<String, dynamic>> items3 = [];
+  static List<Map<String, dynamic>> items2TempCarreras = [];
+  static List<Map<String, dynamic>> items3TempCarreras = [];
+  static List<Map<String, dynamic>> items2TempTypes = [];
+  static List<Map<String, dynamic>> items3TempTypes = [];
 
   @override
   Widget build(BuildContext context) {
-    //List<Map<String, dynamic>> items2 = [];
     _createItemsCarrera(context).then((value) {
-      items3 = value;
-      print('value');
-      print(value);
+      items3TempCarreras = value;
     }).whenComplete(() {
       setState(() {
-        items2 = items3;
-
-        print('_createItemsCarrera finalizado');
+        items2TempCarreras = items3TempCarreras;
       });
     });
 
-    //for (int i = 0; i < 1; i++) {
-    /*if (items2.length == 0) {
-      //i--;
-      print('sleep 1 second');
-      print('items2');
-      print(items2);
-      print(items2.length);
-      print('items3');
-      print(items3);
-      //sleep(Duration(seconds: 10));
-    }*/
-    //}
+    _createItemsTypes(context).then((value) {
+      items3TempTypes = value;
+    }).whenComplete(() {
+      setState(() {
+        items2TempTypes = items3TempTypes;
+      });
+    });
 
     return Scaffold(
       body: AuthBrackground(
@@ -92,21 +84,10 @@ class _RegisterForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final registerForm = Provider.of<RegisterFormProvider>(context);
 
-    List<Map<String, dynamic>>? _itemsCarreras = _RegisterScreenState.items2;
-    List<Map<String, dynamic>>? _itemsTipos = [
-      {
-        'value': '1',
-        'label': 'Estudiante',
-        'icon': Icon(Icons.person_outlined),
-        'textStyle': TextStyle(color: Colors.blue),
-      },
-      {
-        'value': '2',
-        'label': 'Catedratico',
-        'icon': Icon(Icons.person_outlined),
-        'textStyle': TextStyle(color: Colors.blue),
-      },
-    ];
+    List<Map<String, dynamic>>? _itemsCarreras =
+        _RegisterScreenState.items2TempCarreras;
+    List<Map<String, dynamic>>? _itemsTipos =
+        _RegisterScreenState.items2TempTypes;
 
     return Container(
       child: Form(
@@ -124,8 +105,8 @@ class _RegisterForm extends StatelessWidget {
               ),
               onChanged: (value) => registerForm.carnet = value,
               validator: (value) {
-                if (value != null && value.length == 9) return null;
-                return 'El carnet debe ser de 9 caracteres';
+                if (value != null && value.length == 8) return null;
+                return 'El carnet debe ser de 8 caracteres';
               },
             ),
             SizedBox(height: 30),
@@ -295,6 +276,26 @@ class _RegisterForm extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<List<Map<String, dynamic>>> _createItemsTypes(
+    BuildContext context) async {
+  List<Map<String, dynamic>> items = [];
+  final authService = Provider.of<AuthService>(context, listen: false);
+
+  final List<dynamic> carreras = await authService.getTypes();
+
+  carreras.forEach((opt) {
+    final listTemp = {
+      'value': opt['codigot'],
+      'label': opt['nombre'],
+      'icon': Icon(Icons.person_outlined),
+      'textStyle': TextStyle(color: Colors.blue),
+    };
+    items.add(listTemp);
+  });
+
+  return (items);
 }
 
 Future<List<Map<String, dynamic>>> _createItemsCarrera(
