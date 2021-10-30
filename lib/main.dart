@@ -35,7 +35,6 @@ class MyApp extends StatelessWidget {
         'register': (_) => RegisterScreen(),
         'menu': (_) => TabsScreen(),
         'courses': (_) => CoursesScreen(),
-        'settings': (_) => SettingsScreen(),
       },
       theme: myThemeLight,
     );

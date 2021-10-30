@@ -11,13 +11,12 @@ class HomeScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: '',
       ),
-      drawer: MenuDrawer(),
+      // drawer: MenuDrawer(),
       body: SafeArea(
         child: ListView(
           children: [
             _Header(color: color),
             Container(
-              height: 500,
               decoration: boxWhite(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

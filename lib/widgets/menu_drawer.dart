@@ -1,3 +1,4 @@
+import 'package:app_students/screens/screens.dart';
 import 'package:flutter/material.dart';
 
 class MenuDrawer extends StatelessWidget {
@@ -16,14 +17,28 @@ class MenuDrawer extends StatelessWidget {
             leading: Icon(Icons.home, color: color),
             title: Text('Inicio'),
             onTap: () => Navigator.pushReplacementNamed(context, 'menu'),
+           /* onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TabsScreen()),
+              );
+            },*/
           ),
           ListTile(
-            leading: Icon(Icons.settings, color: color),
-            title: Text('Configuraciones'),
-            onTap: () {
-              // Navigator.pop(context);
-              Navigator.pushReplacementNamed(context, 'settings');
-            },
+            leading: Icon(Icons.task, color: color),
+            title: Text('Tareas'),
+            onTap: () {},
+            /*onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ActivityHomeworkScreen()),
+              );
+            },*/
+          ),
+          ListTile(
+            leading: Icon(Icons.description, color: color),
+            title: Text("Hojas de trabajo"),
+            onTap: () {},
           )
         ],
       ),
