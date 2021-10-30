@@ -11,7 +11,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   var profileService;
 
   @override
@@ -22,32 +21,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return StreamBuilder<List<Profile>>(
         stream: profileService.streamController.stream,
-        builder: (BuildContext context,AsyncSnapshot<List<Profile>> snapshot) {
-
-          if(!snapshot.hasData) {
+        builder: (BuildContext context, AsyncSnapshot<List<Profile>> snapshot) {
+          if (!snapshot.hasData) {
             return LoadingScreen();
           }
 
           return Scaffold(
+            appBar: CustomAppBar(
+              title: 'Mi Perfil',
+            ),
             body: Stack(
               children: [
                 ProfileBackground(),
                 ListView(
                   children: [
                     ProfileHeaderScreen(profileService.profile),
-                    ProfileInfoListScreen(),
+                    ProfileInfoListScreen(profileService.profile),
                   ],
                 )
               ],
             ),
           );
-        }
-    );
-
-
-
+        });
   }
 }

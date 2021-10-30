@@ -2,11 +2,9 @@ import 'package:app_students/models/profile.dart';
 import 'package:flutter/material.dart';
 
 class UserInfo extends StatelessWidget {
-
   List<Profile> profile;
 
   UserInfo(this.profile);
-
 
   @override
   Widget build(BuildContext context) {
