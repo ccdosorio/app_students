@@ -9,7 +9,6 @@ class ProfileHeaderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final title = Text(
       this.profile[0].nombre,
       style: TextStyle(
@@ -32,7 +31,7 @@ class ProfileHeaderScreen extends StatelessWidget {
             children: [title],
           ),
           UserInfo(this.profile),
-          ButtonsBar()
+          //ButtonsBar()
         ],
       ),
     );
