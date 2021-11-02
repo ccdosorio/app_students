@@ -53,12 +53,16 @@ class _ProfileInfoListScreenState extends State<ProfileInfoListScreen> {
         children: [
           Card(
             child: ListTile(
-              leading: const Icon(Icons.person),
+              leading: const Icon(
+                Icons.person,
+                color: Colors.blue,
+              ),
               title: Text('Editar perfil'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfileFormScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => ProfileFormScreen(widget._profile)),
                 );
               },
               trailing: Icon(Icons.keyboard_arrow_right),
@@ -80,27 +84,42 @@ List<Widget> _infoList(BuildContext context, List<Profile> profile,
     String carreraTemp3, String tipoTemp3) {
   return [
     ListTile(
-      leading: const Icon(Icons.person),
+      leading: const Icon(
+        Icons.person_outline_rounded,
+        color: Colors.blue,
+      ),
       title: Text('Carnet'),
       subtitle: Text(profile[0].carnet.toString()),
     ),
     ListTile(
-      leading: const Icon(Icons.person),
+      leading: const Icon(
+        Icons.person_pin,
+        color: Colors.blue,
+      ),
       title: Text('Nombre'),
       subtitle: Text(profile[0].nombre),
     ),
     ListTile(
-      leading: const Icon(Icons.person),
+      leading: const Icon(
+        Icons.person_pin_rounded,
+        color: Colors.blue,
+      ),
       title: Text('Apellido'),
       subtitle: Text(profile[0].apellido),
     ),
     ListTile(
-      leading: const Icon(Icons.person),
+      leading: const Icon(
+        Icons.personal_injury,
+        color: Colors.blue,
+      ),
       title: Text('Carrera'),
       subtitle: Text(carreraTemp3),
     ),
     ListTile(
-      leading: const Icon(Icons.person),
+      leading: const Icon(
+        Icons.person_outlined,
+        color: Colors.blue,
+      ),
       title: Text('Tipo de usuario'),
       subtitle: Text(tipoTemp3),
     ),

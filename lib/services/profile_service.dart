@@ -81,4 +81,71 @@ class ProfileService {
   dispose() {
     _streamController.close();
   }
+
+  static Future<String?> saveChanges(
+      String name,
+      String surname,
+      String username,
+      //String carrer,
+      //String type,
+      String email,
+      String password,
+      String carnet) async {
+    final storage = new FlutterSecureStorage();
+    final String _baseURL = 'apistudentsnodejs.herokuapp.com';
+    final carnetNumber = int.parse(carnet);
+    final idUser = await storage.read(key: 'iduser');
+
+    final urlUser = Uri.https(_baseURL, '/usuarios/' + idUser.toString());
+
+    final resUser = await http.get(
+      urlUser,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": await storage.read(key: 'token') ?? ''
+      },
+    );
+
+    final Map<String, dynamic> decodedResUser = json.decode(resUser.body);
+
+    //print(decodedResUser['data']);
+    //print(decodedResUser['data'][0]['idc']);
+    final carrerNumber = decodedResUser['data'][0]['idc'];
+    final typeNumber = decodedResUser['data'][0]['codigot'];
+
+    print("carrerNumber");
+    print(carrerNumber);
+    print("typeNumber");
+    print(typeNumber);
+
+    final Map<String, dynamic> authData = {
+      'carnet': carnetNumber,
+      'nombre': name,
+      'apellido': surname,
+      'user': username,
+      'idc': carrerNumber,
+      'codigot': typeNumber,
+      'password': password,
+      'email': email
+    };
+
+    print(storage);
+
+    final url = Uri.https(_baseURL, '/usuarios/' + idUser.toString());
+
+    final res = await http.put(url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": await storage.read(key: 'token') ?? ''
+        },
+        body: json.encode(authData));
+
+    final Map<String, dynamic> decodedRes = json.decode(res.body);
+
+    if (decodedRes['status'] == 0) {
+      return null;
+    } else {
+      return decodedRes['message'];
+    }
+  }
 }

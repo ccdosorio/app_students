@@ -1,4 +1,6 @@
 import 'dart:convert';
+//import 'dart:html';
+//import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -78,6 +80,7 @@ class AuthService extends ChangeNotifier {
       await storage.write(key: 'token', value: decodedRes['data']['token']);
       await storage.write(
           key: 'iduser', value: decodedRes['data']['codigou'].toString());
+
       return null;
     } else {
       return decodedRes['message'];
