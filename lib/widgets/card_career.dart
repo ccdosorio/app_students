@@ -28,51 +28,56 @@ class _CardCareerState extends State<CardCareer> {
           if (!snapshot.hasData) return CustomLinearLoading();
 
           return Container(
-            height: 280,
+            height: 400,
             child: ListView.builder(
               scrollDirection: Axis.vertical,
               itemCount: careerService.careers.length,
               itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  padding: EdgeInsets.all(10.0),
-                  margin: EdgeInsets.only(left: 15.0, right: 15.0),
-                  height: 140,
-                  width: 250,
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(214, 234, 248, 1),
-                    borderRadius: BorderRadius.circular(24.0),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.asset(
-                            'assets/student.png',
-                            height: 90.0,
-                            width: 70.0,
-                          ),
-                        ),
-                        SizedBox(width: 15),
-                        ConstrainedBox(
-                          constraints:
-                              BoxConstraints(maxWidth: size.width - 180),
-                          child: Text(
-                            careerService.careers[index].carrera,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 1.2,
+                return Column(
+                  children: [
+                    SizedBox(height: 20,),
+                    Container(
+                      padding: EdgeInsets.all(10.0),
+                      margin: EdgeInsets.only(left: 15.0, right: 15.0),
+                      height: 140,
+                      width: 300,
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(214, 234, 248, 1),
+                        borderRadius: BorderRadius.circular(24.0),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.asset(
+                                'assets/student.png',
+                                height: 90.0,
+                                width: 70.0,
+                              ),
                             ),
-                          ),
+                            SizedBox(width: 15),
+                            ConstrainedBox(
+                              constraints:
+                              BoxConstraints(maxWidth: size.width - 300),
+                              child: Text(
+                                careerService.careers[index].carrera,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 1.2,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 15),
+                          ],
                         ),
-                        SizedBox(width: 15),
-                      ],
+                      ),
                     ),
-                  ),
+                  ]
                 );
               },
             ),
