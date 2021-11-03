@@ -61,7 +61,7 @@ class _CardCareerState extends State<CardCareer> {
                             SizedBox(width: 15),
                             ConstrainedBox(
                               constraints:
-                              BoxConstraints(maxWidth: size.width - 300),
+                              BoxConstraints(maxWidth: size.width - 200),
                               child: Text(
                                 careerService.careers[index].carrera,
                                 style: TextStyle(
