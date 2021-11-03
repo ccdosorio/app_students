@@ -10,4 +10,4 @@ export 'package:app_students/screens/profile_screen.dart';
 export 'package:app_students/screens/profile_header_screen.dart';
 export 'package:app_students/screens/profile_info_list_screen.dart';
 export 'package:app_students/screens/profile_form_screen.dart';
-export 'package:app_students/screens/activity_homework_screen.dart';
+export 'package:app_students/screens/activities_screen.dart';

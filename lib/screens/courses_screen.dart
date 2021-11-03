@@ -30,7 +30,7 @@ class _CoursesScreen extends State<CoursesScreen> {
         builder: (BuildContext context,AsyncSnapshot<List<Course>> snapshot) {
 
           if(!snapshot.hasData) {
-            return LoadingScreen();
+            return LoadingScreen('Cursos Actuales');
           }
 
           if(snapshot.hasData && snapshot.data!.length == 0) {

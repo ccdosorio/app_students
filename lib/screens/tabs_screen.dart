@@ -1,4 +1,5 @@
 import 'package:app_students/screens/screens.dart';
+import 'package:app_students/screens/streaming_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +31,7 @@ class _Navigation extends StatelessWidget {
       selectedItemColor: Colors.white,
       unselectedItemColor: Colors.grey,
       elevation: 0.0,
-      items: [Icons.home, Icons.school, Icons.person]
+      items: [Icons.home, Icons.school, Icons.person, Icons.camera]
           .asMap()
           .map((key, value) => MapEntry(
                 key,
@@ -70,6 +71,7 @@ class _Pages extends StatelessWidget {
         HomeScreen(),
         CoursesScreen(),
         ProfileScreen(),
+        StreamingScreen()
       ],
     );
   }

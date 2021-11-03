@@ -25,7 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         stream: profileService.streamController.stream,
         builder: (BuildContext context, AsyncSnapshot<List<Profile>> snapshot) {
           if (!snapshot.hasData) {
-            return LoadingScreen();
+            return LoadingScreen('Mi Perfil');
           }
 
           return Scaffold(

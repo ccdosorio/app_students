@@ -1,5 +1,4 @@
-// import 'package:app_students/screens/screens.dart';
-import 'package:app_students/screens/activity_homework_screen.dart';
+import 'package:app_students/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:app_students/models/models.dart';
 
@@ -16,7 +15,7 @@ class CardCourse extends StatelessWidget {
        onTap: () => Navigator.push(
          context,
          MaterialPageRoute(
-           builder: (context) => ActivityHomeworkScreen(course)
+           builder: (context) => ActivitiesScreen(course)
          ),
        ),
       child: Padding(

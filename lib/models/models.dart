@@ -3,3 +3,7 @@ export 'package:app_students/models/course.dart';
 export 'package:app_students/models/career.dart';
 export 'package:app_students/models/profile.dart';
 export 'package:app_students/models/profile_response.dart';
+export 'package:app_students/models/task.dart';
+export 'package:app_students/models/module.dart';
+export 'package:app_students/models/activity.dart';
+export 'package:app_students/models/activity_response.dart';
