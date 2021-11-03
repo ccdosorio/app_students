@@ -5,13 +5,11 @@ import 'package:app_students/services/services.dart';
 import 'package:app_students/widgets/widgets.dart';
 
 class CardCareer extends StatefulWidget {
-
   @override
   State<CardCareer> createState() => _CardCareerState();
 }
 
 class _CardCareerState extends State<CardCareer> {
-
   var careerService;
 
   @override
@@ -25,20 +23,20 @@ class _CardCareerState extends State<CardCareer> {
     final size = MediaQuery.of(context).size;
 
     return StreamBuilder<List<Career>>(
-      stream: careerService.streamController.stream,
-        builder: (BuildContext context,AsyncSnapshot<List<Career>> snapshot) {
+        stream: careerService.streamController.stream,
+        builder: (BuildContext context, AsyncSnapshot<List<Career>> snapshot) {
           if (!snapshot.hasData) return CustomLinearLoading();
 
           return Container(
-            height: 120,
+            height: 280,
             child: ListView.builder(
-              scrollDirection: Axis.horizontal,
+              scrollDirection: Axis.vertical,
               itemCount: careerService.careers.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   padding: EdgeInsets.all(10.0),
                   margin: EdgeInsets.only(left: 15.0, right: 15.0),
-                  height: 180,
+                  height: 140,
                   width: 250,
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(214, 234, 248, 1),
@@ -59,7 +57,8 @@ class _CardCareerState extends State<CardCareer> {
                         ),
                         SizedBox(width: 15),
                         ConstrainedBox(
-                          constraints: BoxConstraints(maxWidth: size.width - 280),
+                          constraints:
+                              BoxConstraints(maxWidth: size.width - 180),
                           child: Text(
                             careerService.careers[index].carrera,
                             style: TextStyle(
@@ -70,6 +69,7 @@ class _CardCareerState extends State<CardCareer> {
                             ),
                           ),
                         ),
+                        SizedBox(width: 15),
                       ],
                     ),
                   ),
@@ -77,7 +77,6 @@ class _CardCareerState extends State<CardCareer> {
               },
             ),
           );
-        }
-    );
+        });
   }
 }

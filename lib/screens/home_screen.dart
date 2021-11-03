@@ -25,7 +25,8 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(height: 20),
                   titleCard('Facultades'),
                   CardCareer(),
-                  titleCard('Noticias'),
+                  SizedBox(height: 20),
+                  //titleCard('Noticias'),
                 ],
               ),
             )
@@ -71,13 +72,13 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 160,
+      height: 100,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(color: color),
       child: Padding(
         padding: EdgeInsets.all(12.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
